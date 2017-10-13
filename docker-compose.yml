@@ -1,0 +1,24 @@
+version: '2'
+services:
+  web:
+    build: ./nginx
+    volumes:
+      - ./app/symfony_demo:/var/www/html
+    env_file:
+      - app.env
+      - nginx.env
+    ports:
+      - 8080:80
+    links:
+      - fpm
+  fpm:
+    build: ./fpm
+    volumes:
+      - ./app/symfony_demo:/var/www/html
+    env_file:
+      - app.env
+  installer:
+    build: ./installer
+    user: docker
+    volumes:
+      - ./app:/app

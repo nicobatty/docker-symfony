@@ -13,4 +13,7 @@ ENV PHP_CPPFLAGS="$PHP_CPPFLAGS -std=c++11"
 RUN docker-php-ext-configure intl --with-icu-dir=/usr/local \
   && docker-php-ext-install intl opcache
 
-COPY ./php.ini /usr/local/etc/php/php.ini
+ENV APP_ROOT /var/www/html
+
+COPY php.ini /usr/local/etc/php/php.ini
+COPY docker-php-entrypoint /usr/local/bin/docker-php-entrypoint
