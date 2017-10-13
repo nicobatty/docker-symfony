@@ -10,7 +10,7 @@ RUN curl -sS -o /tmp/icu.tar.gz -L http://download.icu-project.org/files/icu4c/5
 
 ENV PHP_CPPFLAGS="$PHP_CPPFLAGS -std=c++11"
 
-RUN docker-php-ext-configure intl --with-icu-dir=/usr/local && \
-    docker-php-ext-install intl opcache
+RUN docker-php-ext-configure intl --with-icu-dir=/usr/local \
+  && docker-php-ext-install intl opcache
 
 COPY ./php.ini /usr/local/etc/php/php.ini
