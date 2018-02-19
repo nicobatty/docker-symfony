@@ -1,24 +1,20 @@
 version: '2'
 services:
   web:
-    build: ./nginx
+    image: nbatty/symfony-nginx
     volumes:
-      - ./app/symfony_demo:/var/www/html
-    env_file:
-      - app.env
-      - nginx.env
+      - .:/var/www/html
     ports:
       - 8080:80
     links:
       - fpm
   fpm:
-    build: ./fpm
-    volumes:
-      - ./app/symfony_demo:/var/www/html
-    env_file:
-      - app.env
-  installer:
-    build: ./installer
+    image: nbatty/symfony-fpm
     user: docker
     volumes:
-      - ./app:/app
+      - .:/var/www/html
+  cli:
+    image: nbatty/symfony-cli
+    user: docker
+    volumes:
+      - .:/var/www/html
