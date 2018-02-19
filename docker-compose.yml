@@ -3,7 +3,7 @@ services:
   web:
     image: nbatty/symfony-nginx
     volumes:
-      - .:/var/www/html
+      - ./app/symfony_demo:/var/www/html
     ports:
       - 8080:80
     links:
@@ -12,9 +12,15 @@ services:
     image: nbatty/symfony-fpm
     user: docker
     volumes:
-      - .:/var/www/html
+      - ./app/symfony_demo:/var/www/html
   cli:
     image: nbatty/symfony-cli
     user: docker
     volumes:
-      - .:/var/www/html
+      - ./app/symfony_demo:/var/www/html
+  installer:
+    image: nbatty/symfony-cli
+    user: docker
+    entrypoint: symfony
+    volumes:
+      - ./app:/var/www/html
