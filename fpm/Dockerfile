@@ -1,6 +1,6 @@
 FROM php:7.1-fpm
 
-RUN curl -sS -o /tmp/icu.tar.gz -L http://download.icu-project.org/files/icu4c/60.2/icu4c-60_2-src.tgz \
+RUN curl -sS -o /tmp/icu.tar.gz -L http://download.icu-project.org/files/icu4c/62.1/icu4c-62_1-src.tgz \
   && tar -zxf /tmp/icu.tar.gz -C /tmp \
   && cd /tmp/icu/source \
   && ./configure --prefix=/usr/local \
@@ -12,10 +12,8 @@ RUN apt-get update \
   && apt-get install -y sudo \
   && rm -rf /var/lib/apt/lists/*
 
-ENV PHP_CPPFLAGS="$PHP_CPPFLAGS -std=c++11"
-
 RUN docker-php-ext-configure intl --with-icu-dir=/usr/local \
-  && docker-php-ext-install intl opcache
+  && docker-php-ext-install intl opcache pcntl
 
 # User Docker for permission managment
 RUN useradd docker \
