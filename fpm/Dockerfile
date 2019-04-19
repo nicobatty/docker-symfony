@@ -27,9 +27,7 @@ RUN useradd docker \
   && echo 'ALL ALL = (ALL) NOPASSWD: ALL' >> /etc/sudoers \
   && echo 'docker:secret' | chpasswd
 
-
 # Setup the Composer installer
-
 ENV COMPOSER_VERSION 1.8.5
 RUN curl --silent --fail --location --retry 3 --output /tmp/installer.php --url https://raw.githubusercontent.com/composer/getcomposer.org/cb19f2aa3aeaa2006c0cd69a7ef011eb31463067/web/installer \
   && php -r " \
@@ -43,6 +41,18 @@ RUN curl --silent --fail --location --retry 3 --output /tmp/installer.php --url 
   && php /tmp/installer.php --no-ansi --install-dir=/usr/bin --filename=composer --version=${COMPOSER_VERSION} \
   && composer --ansi --version --no-interaction \
   && rm -f /tmp/installer.php
+
+ENV XDEBUG_ENABLED 0
+
+# Add Xdebug
+RUN pecl install -o -f xdebug \
+  && rm -rf /tmp/pear \
+  && { \
+      echo "zend_extension=/usr/local/lib/php/extensions/no-debug-non-zts-20170718/xdebug.so"; \
+      echo "xdebug.remote_enable=1"; \
+      echo "xdebug.profiler_enable_trigger=1"; \
+      echo "xdebug.trace_enable_trigger=1"; \
+  } > /usr/local/etc/php/conf.d/ext-xdebug.ini.disabled
 
 ENV APP_ROOT /var/www/html
 WORKDIR /var/www/html
