@@ -1,26 +1,19 @@
-version: '2'
+version: '3.7'
 services:
   web:
     image: nbatty/symfony-nginx
     volumes:
-      - ./app/symfony_demo:/var/www/html
+      - .:/var/www/html
     ports:
       - 8080:80
-    links:
-      - fpm
   fpm:
     image: nbatty/symfony-fpm
     user: docker
     volumes:
-      - ./app/symfony_demo:/var/www/html
-  cli:
-    image: nbatty/symfony-cli
-    user: docker
-    volumes:
-      - ./app/symfony_demo:/var/www/html
-  installer:
-    image: nbatty/symfony-cli
-    user: docker
-    entrypoint: symfony
-    volumes:
-      - ./app:/var/www/html
+      - .:/var/www/html
+    environment:
+      - XDEBUG_ENABLED=1
+      # Use this one for Linux remote debugging
+      - XDEBUG_CONFIG=idekey=PHPSTORM remote_host=172.17.0.1
+      # Use this one for Windows/MacOS remote debugging
+      #- XDEBUG_CONFIG=idekey=PHPSTORM remote_host=host.docker.internal
