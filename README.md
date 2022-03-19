@@ -8,15 +8,15 @@ Feel free to update the file to fit your needs.
 
 ## Stack
 
-* PHP-FPM 7.3
-* NGINX 1.17
+* PHP-FPM 8.1
+* NGINX 1.20
 
 The FPM image does not contain any PDO extensions since it is not a Symfony requirement. You can create a new image from this one if you want to add it.
 
 ## Tools
 
 * Symfony command
-* Composer 1.6.4
+* Composer 2.2.9
 
 ## Symfony Install
 

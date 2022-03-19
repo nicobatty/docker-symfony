@@ -1,4 +1,4 @@
-FROM nginx:1.17
+FROM nginx:1.21
 
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY docker-environment /usr/local/bin/docker-environment
